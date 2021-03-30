@@ -1,16 +1,10 @@
+// Model dependencies
 const db = require("../models/index");
 require('../models/workout.js');
 
-module.exports = function (app) {
-    app.get("/api/config", (req, res) => {
-        res.json({
-            success: true,
-        }).catch(err => {
-            console.log(err)
-        });
-        // console.log("/api/config route has been hit!");
-    });
+module.exports = app => {
 
+    // API GET request with aggregate method that calculates aggregate values for the data in a collection
     app.get("/api/workouts", (req, res) => {
         db.Workout.aggregate([
             {
@@ -27,6 +21,7 @@ module.exports = function (app) {
         });
     });
 
+    // API POST for creating a New Workout
     app.post("/api/workouts", (req, res) => {
         db.Workout.create(req.body)
             .then(function (workouts) {
@@ -37,6 +32,7 @@ module.exports = function (app) {
             });
     });
 
+    // API GET when opening the stats page to populate the charts
     app.get("/api/workouts/range", (req, res) => {
         db.Workout.aggregate([
             {
@@ -57,6 +53,7 @@ module.exports = function (app) {
             });
     });
 
+    // API PUT to update the current workout by adding an exercise
     app.put("/api/workouts/:id", (req, res) => {
         db.Workout.findByIdAndUpdate(
             req.params.id,
