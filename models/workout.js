@@ -1,12 +1,17 @@
+// Mongoose for the Object Data Modeling library
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+
+// Build the workout schema
 const WorkoutSchema = new Schema({
 
+  // Adding Date.now to the document
   day: {
     type: Date,
     default: Date.now()
   },
 
+  // Exercises array of nested properties defining the schema types and requirements 
   exercises: [
     {
       type: {
@@ -47,4 +52,5 @@ const WorkoutSchema = new Schema({
 
 const Workout = mongoose.model("Workout", WorkoutSchema);
 
+// Export Workout to be used by the routes
 module.exports = Workout;
